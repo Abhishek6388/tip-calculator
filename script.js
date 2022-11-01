@@ -1,85 +1,26 @@
-const billInput = document.querySelector('.bill-input');
-const peopleInput = document.querySelector('.people-input');
-const tipPerPerson = document.getElementById('tip-amount');
-const totalPerPerson = document.getElementById('total-amount');
-const tip = document.querySelectorAll('.tips');
-const tipCustom = document.querySelector('.tip-custom');
-const resetBtn = document.querySelector('reset');
-const error = document.querySelector(".error");
-
-
-billInput.addEventListener('input' , billInput);
-billInput.addEventListener('input' , peopleInputFun);
-tips.forEach(function(val){
-    val.addEventListener('click', handleClick)
-    
-});
-tipCustom.addEventListener('input', tipInputFun)
-reset.addEventListener('click', reset);
-
-
-billInput.value = '0.0';
-peopleInput.value = '1';
-tipPerPerson.innerHTML = "$" + (0.0).toFixed(2);
-tipPerPerson.innerHTML = "$" + (0.0).toFixed(2);
-
-let billValue = 0.0;
-let peopleValue = 1;
-let tipValue = 0.15;
-
-function billInputFun(){
-    billValue = parseFloat(billInput.value)
-    calculateTip;
+window.onload = () => {
+    document.querySelector('#calculate').onclick = calculateTip;
 }
 
-function peopleInputFun(){
-    billValue = parseFloat(peopleInput.value)
-    calculateTip();
-
-    if(peopleValue < 1){
-        error.style.display = 'flex'
-        peopleInput.style.border = 'thick solid red'
-    }else{
-        error.style.display = 'none'
-        peopleInput.style.border = 'none'
-        calculateTip();
-
+function calculateTip()
+{
+    var bill = document.querySelector("#billamt").value;
+    var tipPercentage = document.querySelector("#serviceQual").value;
+    var persons = document.querySelector("#peopleamt").value;
+    if(bill === '' || tipPercentage === 'Select' || persons === '')
+    {
+        alert("Please Enter Bill Amount");
+        return;
     }
-
-}
-
-function tipInputFun(){
-    tipValue = parseFloat(tipCustom.value / 100);
-
-    tips.forEach(function(val){
-        val.classList.remove("active-tip");
-    })
-}
-
-function handleClick(even){
-    tips.forEach(function (val){
-        val.classList.remove("active-tip");
-        if (Event.target.innerHTML == val.innerHTML){
-            val.classList.add("active-tip");
-            tipValue = parseFloat(val.innerHTML)/100;
-        }
-    });
-    calculateTip();
-}
-
-function calculateTip(){
-    if(peopleValue >=1){
-        let tipAmount = (billValue * tipValue) / peopleValue;
-        let total = (billValue * tipAmount) / peopleValue;
-        tipPerPerson.innerHTML = "$" + tipAmount.toFixed(2);
-        totalPerPerson.innerHTML = "$" + total.toFixed(2);
+    if(persons === '1')
+    {
+        document.querySelector('#each').style.display = 'none';
     }
-}
-
-function reset{
-billInput.value = '0.0';
-billInputFun
-peopleInput.value = '1';
-billInputFun()
-tipCustomValue = ""
+    else
+    {
+        document.querySelector('#each').style.display = 'block';
+    }
+    var tip=(bill*tipPercentage)/persons;
+    tip=tip.toFixed(2);
+    document.getElementById("total").innerHTML=tip;
 }
